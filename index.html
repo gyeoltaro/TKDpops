@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>체력측정 등급표 계산기 · 왕복오래달리기·윗몸일으키기·제자리멀리뛰기 PAPS 기준</title>
+<meta name="description" content="7세부터 고3까지 체력측정 등급을 바로 계산합니다. 왕복오래달리기, 윗몸일으키기, 팔굽혀펴기, 제자리멀리뛰기, 윗몸앞으로굽히기, 눈감고외발서기 — 교육부 학생건강체력평가(PAPS) 공식 기준표와 측정 방법, 측정용 신호음까지 한 페이지에서 확인하세요.">
+<meta name="theme-color" content="#14161A">
+<meta name="robots" content="index,follow">
+<!-- 배포 후 실제 주소로 바꿔주세요 (예: https://awoolimtkd.github.io/paps/) -->
+<link rel="canonical" href="https://example.com/paps/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="어울림태권도장">
+<meta property="og:title" content="체력측정 등급표 계산기 · PAPS 기준 7세~고3">
+<meta property="og:description" content="기록만 넣으면 등급이 바로 나옵니다. 측정 방법, 측정 신호음, 성장 그래프까지 한 번에.">
+<meta property="og:url" content="https://example.com/paps/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%2314161A'/%3E%3Ccircle cx='50' cy='38' r='16' fill='%23FAFAF7'/%3E%3Crect x='30' y='60' width='40' height='28' rx='4' fill='%230B4E8C'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --ink:#14161A;        /* 검은띠 */
+  --dobok:#FAFAF7;      /* 도복 */
+  --paper:#FFFFFF;
+  --line:#DEDBD2;
+  --mute:#7C8189;
+  --nam:#0B4E8C;        /* 태극 남 */
+  --hong:#C8102E;       /* 태극 홍 */
+  --b1:#14161A; --b2:#0B4E8C; --b3:#1E7A4B; --b4:#E0A800; --b5:#CFCABC;
+  --sp:clamp(14px,3.5vw,22px);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--dobok); color:var(--ink);
+  font-family:Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  font-size:15px; line-height:1.55; -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:820px;margin:0 auto;padding:0 var(--sp) 72px}
+
+/* ── 머리 ── */
+header{padding:34px 0 22px;border-bottom:3px solid var(--ink)}
+.eyebrow{font-size:11px;letter-spacing:.22em;color:var(--hong);font-weight:700;margin:0 0 6px}
+h1{font-size:clamp(25px,6.5vw,36px);font-weight:800;letter-spacing:-.03em;margin:0}
+header p{margin:8px 0 0;color:var(--mute);font-size:13px}
+
+/* ── 탭 메뉴 ── */
+.tabnav{display:flex;gap:2px;margin:20px 0 0;border-bottom:2px solid var(--ink);overflow-x:auto}
+.tabbtn{flex:1;min-width:76px;background:transparent;border:0;border-radius:0;color:var(--mute);
+  font-weight:700;font-size:13px;padding:11px 6px;cursor:pointer;letter-spacing:.02em}
+.tabbtn.on{background:var(--ink);color:#fff}
+.tabbtn:not(.on):hover{background:#EFECE3;color:var(--ink)}
+.tabpane{display:none}
+.tabpane.on{display:block}
+@media print{.tabnav{display:none}.tabpane{display:block!important}}
+
+h2{font-size:14px;font-weight:800;letter-spacing:.06em;margin:34px 0 12px;
+   padding-bottom:7px;border-bottom:1px solid var(--line)}
+h2 span{color:var(--mute);font-weight:500;letter-spacing:0;margin-left:8px;font-size:12px}
+
+/* ── 입력 ── */
+.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(132px,1fr))}
+label{display:block;font-size:11.5px;font-weight:700;color:var(--mute);margin:0 0 5px;letter-spacing:.02em}
+input,select{
+  width:100%;padding:11px 12px;font:inherit;font-size:16px;
+  background:var(--paper);border:1px solid var(--line);border-radius:2px;color:var(--ink);
+}
+input:focus,select:focus{outline:2px solid var(--nam);outline-offset:1px;border-color:var(--nam)}
+.unit{font-weight:500;color:var(--mute)}
+.row-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+button{font:inherit;font-weight:700;font-size:14px;padding:11px 18px;border-radius:2px;cursor:pointer;
+  border:1px solid var(--ink);background:var(--ink);color:var(--dobok);letter-spacing:.02em}
+button.ghost{background:transparent;color:var(--ink)}
+button:hover{opacity:.86}
+button:focus-visible{outline:2px solid var(--nam);outline-offset:2px}
+
+/* ── 결과: 띠 게이지 (시그니처) ── */
+#result{margin-top:8px}
+.verdict{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  padding:16px 0 14px;border-bottom:1px solid var(--line)}
+.verdict b{font-size:30px;font-weight:800;letter-spacing:-.02em}
+.verdict .who{font-size:13px;color:var(--mute)}
+.belts{margin:14px 0 0}
+.belt{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:11px 0;border-bottom:1px dotted var(--line)}
+.belt .nm{font-size:13.5px;font-weight:700}
+.belt .rec{font-size:12.5px;color:var(--mute);text-align:right;white-space:nowrap}
+.bar{grid-column:1/-1;display:flex;gap:3px;height:11px;margin-top:3px}
+.seg{flex:1;background:#EEECE4;border-radius:1px}
+.seg.on{background:var(--g)}
+.belt .tag{grid-column:1/-1;font-size:11.5px;font-weight:700;color:var(--g);margin-top:5px;letter-spacing:.03em}
+.belt.na .nm,.belt.na .rec{color:#B6B2A8}
+
+/* ── 명단 ── */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+th{font-size:11px;letter-spacing:.05em;color:var(--mute);font-weight:700;background:#F1EFE7}
+td:nth-child(2){text-align:left;font-weight:700}
+.gnum{display:inline-block;min-width:19px;padding:1px 0;border-radius:2px;color:#fff;font-weight:800;font-size:11.5px}
+.empty{color:var(--mute);font-size:13px;padding:18px 0;text-align:center;border-bottom:1px solid var(--line)}
+.del{border:0;background:none;color:var(--hong);padding:2px 6px;font-size:12px;font-weight:700}
+
+/* ── 기준표 ── */
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;padding:13px 2px;font-weight:700;font-size:14px;list-style:none;display:flex;justify-content:space-between}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"＋";color:var(--mute);font-weight:400}
+details[open] summary::after{content:"－"}
+.tblwrap{overflow-x:auto;padding-bottom:14px}
+.ref th:first-child,.ref td:first-child{text-align:center;font-weight:800;background:#F7F5EE}
+.note{font-size:12px;color:var(--mute);line-height:1.7;margin:22px 0 0}
+.note b{color:var(--ink)}
+
+/* ── 음원 ── */
+.tracks{display:grid;gap:14px}
+.track{border:1px solid var(--line);border-radius:2px;padding:16px 18px;background:var(--paper)}
+.track h3{margin:0 0 4px;font-size:15px;font-weight:800}
+.track .meta{font-size:12px;color:var(--mute);margin:0 0 12px}
+.track .meta b{color:var(--hong);font-weight:700}
+.track audio{width:100%;height:38px}
+.track .dl{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:12.5px;font-weight:700;color:var(--nam);text-decoration:none}
+.track .dl:hover{text-decoration:underline}
+.usebox{margin-top:16px;padding:14px 16px;background:#F1EFE7;border-radius:2px;font-size:12.5px;color:var(--ink);line-height:1.8}
+.usebox b{color:var(--hong)}
+
+/* ── 성장 그래프 ── */
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 4px}
+.chip{border:1px solid var(--line);background:var(--paper);border-radius:20px;padding:5px 12px;
+  font-size:11.5px;font-weight:700;cursor:pointer;color:var(--mute);user-select:none}
+.chip.on{color:#fff;border-color:transparent}
+.chartwrap{border:1px solid var(--line);border-radius:2px;padding:14px 10px 4px;background:var(--paper);margin-top:6px}
+.chartwrap svg{width:100%;height:auto;display:block}
+.chart-empty{color:var(--mute);font-size:13px;text-align:center;padding:34px 0}
+.trackmeta{font-size:12px;color:var(--mute);margin:10px 2px 0}
+
+/* ── 측정 방법 ── */
+.howto{border:1px solid var(--line);border-radius:2px;margin-bottom:8px;background:var(--paper)}
+.howto summary{padding:13px 14px;font-size:13.5px}
+.howto summary b{font-weight:800}
+.howto summary .ic{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+  border-radius:50%;background:var(--ink);color:#fff;font-size:11px;font-weight:800;margin-right:9px}
+.howto-body{padding:0 14px 16px;font-size:13px;line-height:1.75}
+.howto-body ol{margin:0;padding-left:18px}
+.howto-body li{margin-bottom:6px}
+.howto-body .tip{margin-top:10px;padding:10px 12px;background:#F1EFE7;border-radius:2px;font-size:12px;color:#404040}
+.howto-body .tip b{color:var(--hong)}
+.seg-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11.5px;color:var(--mute);margin:10px 0 0}
+.seg-legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:4px;vertical-align:-1px}
+@media print{body{background:#fff}.noprint{display:none}details{page-break-inside:avoid}details>div{display:block!important}}
+@media (prefers-reduced-motion:no-preference){.seg{transition:background .25s ease}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">태권도장 체력측정</p>
+  <h1>체력측정 기준표 · 등급 판정</h1>
+  <p>기록을 넣으면 나이·성별에 맞는 등급이 바로 나옵니다. 측정용 신호음도 바로 재생할 수 있습니다. 초4~고3은 교육부 학생건강체력평가(PAPS) 공식 기준, 7세·초1~초3은 도장 자체 추정 기준입니다.</p>
+</header>
+
+<nav class="tabnav noprint" id="tabnav">
+  <button class="tabbtn on" data-tab="calc">계산기</button>
+  <button class="tabbtn" data-tab="howto">측정법</button>
+  <button class="tabbtn" data-tab="audio">음원</button>
+  <button class="tabbtn" data-tab="standards">기준표</button>
+  <button class="tabbtn" data-tab="guide">사용법</button>
+</nav>
+
+<section id="tab-calc" class="tabpane on">
+<div class="usebox" style="margin-top:18px">
+  <b>7세·초1~초3 기준 안내</b> · 정부 공식 체력기준은 <b>초4(만10세)부터</b> 시작합니다 — 학교 PAPS도, 국민체력100도 만7~10세 구간은 다루지 않습니다.
+  이 페이지의 7세·초1·초2·초3 수치는 초4~초6 공식 기준의 증가 추세를 거꾸로 계산한 <b>도장 자체 추정치</b>입니다. 국가 인증 기준이 아니니, 절대적인 합격선이 아니라 성장 추이를 보는 참고용으로만 써주세요.
+</div>
+
+<h2>기록 입력<span>노란 등급이 3등급 — 여기가 기준선입니다</span></h2>
+<div class="grid">
+  <div><label for="nm">이름</label><input id="nm" placeholder="홍길동"></div>
+  <div><label for="mdate">측정일</label><input id="mdate" type="date"></div>
+  <div><label for="sx">성별</label><select id="sx"><option value="남">남</option><option value="여">여</option></select></div>
+  <div><label for="gr">나이/학년</label><select id="gr"></select></div>
+  <div><label for="ht">키 <span class="unit">cm</span></label><input id="ht" type="number" inputmode="decimal" step="0.1"></div>
+  <div><label for="wt">몸무게 <span class="unit">kg</span></label><input id="wt" type="number" inputmode="decimal" step="0.1"></div>
+</div>
+<div class="grid" style="margin-top:10px">
+  <div><label for="i_shuttle">왕복오래달리기 <span class="unit">회</span></label><input id="i_shuttle" type="number" inputmode="numeric"></div>
+  <div><label for="i_situp">윗몸일으키기 <span class="unit">회</span></label><input id="i_situp" type="number" inputmode="numeric"></div>
+  <div><label for="i_pushup">팔굽혀펴기 <span class="unit">회</span></label><input id="i_pushup" type="number" inputmode="numeric"></div>
+  <div><label for="i_jump">제자리멀리뛰기 <span class="unit">cm</span></label><input id="i_jump" type="number" inputmode="decimal" step="0.1"></div>
+  <div><label for="i_flex">윗몸앞으로굽히기 <span class="unit">cm</span></label><input id="i_flex" type="number" inputmode="decimal" step="0.1"></div>
+  <div><label for="i_balance">눈감고외발서기 <span class="unit">초</span></label><input id="i_balance" type="number" inputmode="numeric"></div>
+</div>
+<div class="row-actions noprint">
+  <button id="btnAdd">명단에 저장</button>
+  <button class="ghost" id="btnClear">입력 비우기</button>
+</div>
+
+<div id="result"></div>
+<div class="row-actions noprint" id="shareRow" style="display:none">
+  <button class="ghost" id="btnShare">결과 이미지로 저장·공유</button>
+</div>
+<canvas id="shareCanvas" width="1080" height="1120" style="display:none"></canvas>
+
+<h2>측정 명단<span id="cnt"></span></h2>
+<div class="tblwrap">
+  <table id="listTbl">
+    <thead><tr>
+      <th>#</th><th>이름</th><th>측정일</th><th>성별</th><th>나이/학년</th><th>BMI</th><th>비만도</th>
+      <th>달리기</th><th>윗몸</th><th>팔굽</th><th>멀리뛰기</th><th>굽히기</th><th>외발</th>
+      <th>평균</th><th>판정</th><th class="noprint"></th>
+    </tr></thead>
+    <tbody id="listBody"></tbody>
+  </table>
+</div>
+<div class="row-actions noprint">
+  <button class="ghost" id="btnCsv">엑셀(CSV)로 내려받기</button>
+  <button class="ghost" id="btnPrint">인쇄하기</button>
+  <button class="ghost" id="btnListClear">명단 전체 삭제</button>
+</div>
+
+<h2>성장 그래프<span>측정일 기준으로 자동 기록됩니다</span></h2>
+<p style="font-size:12.5px;color:var(--mute);margin:0 0 12px">
+  위에서 <b>“명단에 저장”</b>을 누르면 측정일(연/월) 기준으로 이 그래프에도 자동으로 쌓입니다 — 따로 누르실 것 없습니다.
+  같은 학생을 여러 해에 걸쳐 보고 싶거나 특정 달만 다시 저장하고 싶을 때만 아래에서 이름·연도·월을 정해 직접 저장하세요.
+  기록은 <b>이 기기의 브라우저</b>에만 저장됩니다 — 다른 기기에서는 보이지 않습니다.
+</p>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(132px,1fr))">
+  <div><label for="trackName">학생 이름</label><input id="trackName" list="trackNames" placeholder="위 이름과 동일하게"></div>
+  <div><label for="trackYear">측정 연도</label><input id="trackYear" type="number" value="2026"></div>
+  <div><label for="trackMonth">측정 월</label><select id="trackMonth"></select></div>
+</div>
+<datalist id="trackNames"></datalist>
+<div class="row-actions noprint">
+  <button id="btnTrackSave">이번 달 기록으로 저장</button>
+  <button class="ghost" id="btnTrackDel">이 학생 기록 전체 삭제</button>
+</div>
+<div class="chips" id="trackChips"></div>
+<div class="chartwrap" id="chartWrap"><div class="chart-empty">학생 이름을 입력하면 그래프가 나타납니다.</div></div>
+<div class="trackmeta" id="trackMeta"></div>
+</section>
+
+<section id="tab-howto" class="tabpane">
+<h2>측정 방법 안내<span>재는 순서를 몰라도 이대로만 하면 됩니다</span></h2>
+<div id="howtoBox"></div>
+</section>
+
+<section id="tab-audio" class="tabpane">
+<h2>측정 신호음 음원<span>재생하면서 바로 측정하세요</span></h2>
+<div class="tracks">
+  <div class="track">
+    <h3>왕복오래달리기(셔틀런) 신호음</h3>
+    <p class="meta">점점 빨라지는 신호음에 맞춰 구간을 왕복으로 달립니다 · <b>총 17분 48초</b> · 신호가 울리기 전에 반대쪽 선을 넘지 못하면 경고, 두 번째부터는 그 직전 횟수로 측정을 마칩니다</p>
+    <audio controls preload="none" controlsList="nodownload noremoteplayback" oncontextmenu="return false" src="./audio/paps-shuttle.mp3"></audio>
+  </div>
+  <div class="track">
+    <h3>윗몸말아올리기 신호음</h3>
+    <p class="meta">3초에 1회 울리는 신호음 · <b>총 10분 38초</b> · 신호에 맞춰 상체를 말아 올렸다 내리면 1회로 인정됩니다</p>
+    <audio controls preload="none" controlsList="nodownload noremoteplayback" oncontextmenu="return false" src="./audio/paps-situp.mp3"></audio>
+  </div>
+  <div class="track">
+    <h3>스텝검사 신호음</h3>
+    <p class="meta">스텝박스를 오르내리는 박자 신호음 · <b>총 3분</b> · 초등 5·6학년과 중학생·고등학생 여자는 분당 24회, 고등학생 남자는 분당 30회 박자입니다</p>
+    <audio controls preload="none" controlsList="nodownload noremoteplayback" oncontextmenu="return false" src="./audio/paps-step.mp3"></audio>
+  </div>
+</div>
+<div class="usebox">
+  <b>사용 팁</b> · 스피커 볼륨을 미리 확인하고 시작하세요. 신호음을 놓치면 측정을 다시 해야 하니, 학생들에게 재생 전 자세와 규칙을 먼저 안내해 주세요. 윗몸말아올리기는 신호를 두 번 연속 놓치면 그 시점까지의 횟수로 기록합니다. 측정할 때마다 이 페이지에서 재생해 주세요.
+</div>
+</section>
+
+<section id="tab-standards" class="tabpane">
+<h2>등급 기준표<span>표의 숫자는 그 등급의 최소 기록입니다</span></h2>
+<div id="refs"></div>
+
+<p class="note">
+<b>출처</b> · 초4~고3은 학교건강검사규칙 [별표] 신체능력검사(필수평가) 기준표(PAPS). 7세·초1~초3은 국가 공식 기준이 없어 위 추세를 이용해 만든 도장 자체 추정치입니다(빨간 “추정” 표시).<br>
+<b>팔굽혀펴기</b>는 공식 PAPS에서 중1부터 실시합니다. 초4~초6은 국가 기준대로 <b>—</b> 로 비워뒀고, 7세·초1~초3은 도장 자체 추정치로 채웠습니다(여학생은 무릎대고 실시).<br>
+<b>윗몸앞으로굽히기</b>는 공식 PAPS에서 초5부터 실시합니다. 초4는 국가 기준대로 <b>—</b> 로 비워뒀고, 7세·초1~초3은 도장 자체 추정치로 채웠습니다. <b>윗몸일으키기</b>는 PAPS 기준상 윗몸말아올리기(3초에 1회 신호음, 손바닥으로 무릎 감싸기)라 일반 싯업보다 횟수가 많이 나옵니다.<br>
+<b>눈감고외발서기</b>는 PAPS 종목이 아닙니다. 도장 자체 참고 기준을 넣어뒀으니, 아이들 기록을 보시고 조정해서 쓰세요.
+</p>
+</section>
+
+<section id="tab-guide" class="tabpane">
+<h2>사용법<span>이 순서대로 하면 됩니다</span></h2>
+<ol style="margin:0 0 20px;padding-left:20px;font-size:13.5px;line-height:1.9">
+  <li><b>계산기</b> 탭에서 이름·측정일·성별·나이를 고르고, 잰 기록을 종목별로 넣습니다. 다 안 넣어도 넣은 항목만큼 결과가 바로 나옵니다.</li>
+  <li>결과가 마음에 들면 <b>“결과 이미지로 저장·공유”</b>를 눌러 학부모에게 바로 보낼 수 있습니다.</li>
+  <li>여러 명을 잴 때는 <b>“명단에 저장”</b>을 눌러 아래 표에 쌓아두고, 다음 학생 걸로 넘어가세요. 이름·측정일은 그대로 남아 있어서 같은 날엔 다시 안 넣어도 됩니다.</li>
+  <li>명단은 이 브라우저에 계속 저장되니 급하게 CSV를 받지 않아도 됩니다. 다만 다른 기기에서도 보려면, 또는 확실한 백업을 원하시면 <b>“엑셀(CSV)로 내려받기”</b>를 눌러 파일로도 남겨두세요.</li>
+  <li>“명단에 저장”을 누르면 성장 그래프에도 측정일 기준(연/월)으로 자동 반영됩니다. 다음 달에 같은 이름으로 다시 저장하면 그래프가 이어집니다. 따로 저장하고 싶을 때만 “성장 그래프” 칸에서 직접 눌러주세요.</li>
+</ol>
+
+<div class="howto">
+  <details open>
+    <summary><span class="ic">Q</span><b>새로고침하면 “측정 명단”이 사라지나요?</b></summary>
+    <div class="howto-body">아니요, 이제 안 사라집니다. 성장 그래프와 마찬가지로 이 브라우저에 저장(localStorage)됩니다. 다만 다른 기기·다른 브라우저에선 안 보이고, 브라우저 데이터를 지우면 함께 사라지니, 확실히 남기고 싶은 기록은 CSV로도 내려받아 두시길 권합니다. 명단을 비우고 싶을 땐 “명단 전체 삭제”를 누르세요.</div>
+  </details>
+  <details>
+    <summary><span class="ic">Q</span><b>“성장 그래프” 기록도 새로고침하면 없어지나요?</b></summary>
+    <div class="howto-body">아니요, 이건 남습니다. 이 브라우저에 저장(localStorage)되기 때문에 새로고침은 물론 다음 날 다시 들어와도 그대로 있습니다. 다만 브라우저 데이터/캐시를 지우거나, 시크릿(비공개) 모드로 쓰거나, 사이트 주소 자체가 나중에 바뀌면 그때는 사라집니다.</div>
+  </details>
+  <details>
+    <summary><span class="ic">Q</span><b>다른 폰이나 컴퓨터에서도 같은 기록이 보이나요?</b></summary>
+    <div class="howto-body">아니요. 성장 그래프 기록은 지금 쓰고 계신 그 기기의 그 브라우저에만 저장됩니다. 관장님 폰 하나로 계속 관리하신다면 문제없지만, 여러 기기를 오가며 쓰시면 기기마다 따로 쌓입니다.</div>
+  </details>
+  <details>
+    <summary><span class="ic">Q</span><b>측정 신호음은 어떻게 트나요?</b></summary>
+    <div class="howto-body"><b>음원</b> 탭에서 재생 버튼만 누르면 됩니다. 신호가 시작되기 전에 학생들에게 자세와 규칙을 먼저 안내해 주세요.</div>
+  </details>
+  <details>
+    <summary><span class="ic">Q</span><b>종이로 나눠주고 싶은데, 인쇄가 되나요?</b></summary>
+    <div class="howto-body">네, “인쇄하기” 버튼을 누르면 됩니다. 인쇄할 때는 탭 메뉴 없이 모든 내용이 한 번에 출력됩니다.</div>
+  </details>
+</div>
+</section>
+
+</div>
+
+<script>
+const GR=["7세","초1","초2","초3","초4","초5","초6","중1","중2","중3","고1","고2","고3"];
+const YOUNG=["7세","초1","초2","초3"]; // 국가 공식 기준 없음 — 추정치
+const M={
+ shuttle:{"7세":[87,59,35,19],초1:[88,60,36,20],초2:[90,62,38,22],초3:[93,65,41,24],초4:[96,69,45,26],초5:[100,73,50,29],초6:[104,78,54,32],중1:[64,50,36,20],중2:[66,52,38,22],중3:[68,54,40,24],고1:[70,56,42,26],고2:[72,58,44,28],고3:[74,60,46,30]},
+ situp:{"7세":[80,40,22,4],초1:[80,40,22,4],초2:[80,40,22,5],초3:[80,40,22,6],초4:[80,40,22,7],초5:[80,40,22,10],초6:[80,40,22,10],중1:[90,55,33,14],중2:[90,55,33,14],중3:[90,55,33,14],고1:[90,60,35,15],고2:[90,60,35,17],고3:[90,60,35,17]},
+ pushup:{"7세":[8,5,3,1],초1:[10,6,4,1],초2:[12,8,5,2],초3:[14,10,6,3],초4:null,초5:null,초6:null,중1:[34,25,12,4],중2:[34,25,12,4],중3:[34,25,14,4],고1:[46,30,16,7],고2:[50,42,25,11],고3:[56,46,30,17]},
+ jump:{"7세":[135.6,128.4,109.4,74.8],초1:[140.8,131.6,112.6,78.6],초2:[148.3,136.1,117.1,84.1],초3:[158.1,141.9,122.9,91.3],초4:[170.1,149.1,130.1,100.1],초5:[180.1,159.1,141.1,111.1],초6:[200.1,167.1,148.1,122.1],중1:[211.1,177.1,159.1,131.1],중2:[218.1,187.1,169.1,136.1],중3:[238.1,201.1,180.1,145.1],고1:[255.1,216.1,195.1,160.1],고2:[258.1,228.1,212.1,177.1],고3:[264.1,243.1,221.1,185.1]},
+ flex:{"7세":[1,-2,-6,-11],초1:[2,-1,-5,-10],초2:[3,0,-4,-9],초3:[4,1,-3,-8],초4:null,초5:[8,5,1,-4],초6:[8,5,1,-4],중1:[10,6,2,-4],중2:[10,7,2,-4],중3:[10,7,2.6,-3],고1:[13,9,4,-2],고2:[16,11,5,0.1],고3:[16,11,6,0.1]},
+ bmi:{"7세":[13.6,18.6,21.2],초1:[13.7,18.9,21.5],초2:[13.8,19.4,21.9],초3:[14.0,20.0,22.5],초4:[14.2,20.7,23.2],초5:[14.5,21.6,24.4],초6:[14.8,22.5,24.9],중1:[15.3,23.2,24.9],중2:[15.7,23.8,24.9],중3:[16.2,24.3,24.9],고1:[16.7,24.6,24.9],고2:[17.2,24.9,24.9],고3:[17.7,24.9,24.9]}};
+const F={
+ shuttle:{"7세":[59,43,29,16],초1:[61,45,30,17],초2:[65,48,33,18],초3:[71,52,36,19],초4:[77,57,40,21],초5:[85,63,45,23],초6:[93,69,50,25],중1:[35,25,19,14],중2:[40,29,21,15],중3:[45,33,23,16],고1:[50,37,25,17],고2:[55,41,27,18],고3:[55,41,27,18]},
+ situp:{"7세":[60,13,12,5],초1:[60,15,13,5],초2:[60,19,14,5],초3:[60,23,16,6],초4:[60,29,18,6],초5:[60,36,23,7],초6:[60,43,23,7],중1:[58,43,22,7],중2:[58,39,19,7],중3:[52,34,17,6],고1:[40,30,13,4],고2:[40,30,13,4],고3:[40,30,13,4]},
+ pushup:{"7세":[6,4,2,1],초1:[8,5,3,1],초2:[10,6,4,2],초3:[12,8,5,3],초4:null,초5:null,초6:null,중1:[45,24,14,6],중2:[40,24,14,6],중3:[40,24,14,6],고1:[40,24,14,6],고2:[40,30,18,9],고3:[40,30,18,9]},
+ jump:{"7세":[145.0,124.7,109.9,93.7],초1:[147.4,126.3,111.3,94.2],초2:[150.9,128.6,113.3,94.9],초3:[155.5,131.5,115.9,95.9],초4:[161.1,135.1,119.1,97.1],초5:[170.1,139.1,123.1,100.1],초6:[175.1,144.1,127.1,100.1],중1:[175.1,144.1,127.1,100.1],중2:[183.1,145.1,127.1,100.1],중3:[183.1,145.1,127.1,100.1],고1:[186.1,159.1,139.1,100.1],고2:[186.1,159.1,139.1,100.1],고3:[186.1,159.1,139.1,100.1]},
+ flex:{"7세":[1,-2,-1,-6],초1:[2,-1,0,-5],초2:[4,1,1,-4],초3:[6,3,2,-2],초4:null,초5:[10,7,5,1],초6:[14,10,5,2],중1:[15,11,8,2],중2:[15,11,8,2],중3:[16,11,8,2],고1:[16,11,8,2],고2:[17,12,9,5],고3:[17,12,9,5]},
+ bmi:{"7세":[13.1,18.0,19.8],초1:[13.2,18.3,20.1],초2:[13.4,18.7,20.6],초3:[13.6,19.2,21.2],초4:[13.9,19.8,22.0],초5:[14.2,20.6,23.0],초6:[14.6,21.4,23.9],중1:[15.1,22.1,24.7],중2:[15.6,22.7,24.9],중3:[16.2,23.2,24.9],고1:[16.7,23.6,24.9],고2:[17.2,23.8,24.9],고3:[17.6,23.9,24.9]}};
+/* 도장 자체 참고 기준 — 필요하면 이 숫자만 고치세요 */
+const BAL={"7세":[19,11,5,2],초1:[20,12,6,3],초2:[23,14,8,4],초3:[26,17,10,5],초4:[30,20,12,6],초5:[35,24,15,8],초6:[40,28,18,9],중1:[45,30,20,10],중2:[45,30,20,10],중3:[45,30,20,10],고1:[50,35,22,12],고2:[50,35,22,12],고3:[50,35,22,12]};
+
+const ITEMS=[
+ {k:"shuttle",n:"왕복오래달리기",u:"회",short:"달리기",hint:"초 15m · 중고 20m"},
+ {k:"situp",  n:"윗몸일으키기",  u:"회",short:"윗몸",  hint:"윗몸말아올리기 · 3초에 1회"},
+ {k:"pushup", n:"팔굽혀펴기",    u:"회",short:"팔굽",  hint:"중1부터 · 여학생 무릎대고"},
+ {k:"jump",   n:"제자리멀리뛰기",u:"cm",short:"멀리뛰기",hint:"2회 중 좋은 기록"},
+ {k:"flex",   n:"윗몸앞으로굽히기",u:"cm",short:"굽히기",hint:"앉아서 · 초5부터"},
+ {k:"balance",n:"눈감고외발서기",u:"초",short:"외발",  hint:"도장 자체 기준"}];
+const GCOL=["","var(--b1)","var(--b2)","var(--b3)","var(--b4)","var(--b5)"];
+const GNAME=["","아주 높음","높음","보통","낮음","아주 낮음"];
+const GBELT=["","검은띠","파란띠","초록띠","노란띠","흰띠"];
+
+const $=id=>document.getElementById(id);
+$("mdate").value=new Date().toISOString().slice(0,10);
+GR.forEach(g=>$("gr").insertAdjacentHTML("beforeend",`<option>${g}</option>`));
+$("gr").value="초5";
+
+const th=(sex,key,gr)=>key==="balance"?BAL[gr]:(sex==="남"?M:F)[key][gr];
+function grade(sex,key,gr,v){
+  const t=th(sex,key,gr);
+  if(!t||v===null||v==="")return null;
+  for(let i=0;i<4;i++) if(v>=t[i]) return i+1;
+  return 5;
+}
+function fatness(sex,gr,bmi){
+  const b=(sex==="남"?M:F).bmi[gr];
+  if(bmi<=b[0])return"마름";
+  if(bmi<=b[1])return"정상";
+  if(bmi<=b[2])return"과체중";
+  if(bmi<=29.9)return"경도비만";
+  return"고도비만";
+}
+const num=id=>{const v=$(id).value.trim();return v===""?null:parseFloat(v);};
+
+function read(){
+  const sex=$("sx").value,gr=$("gr").value,ht=num("ht"),wt=num("wt");
+  const bmi=(ht&&wt)?Math.round(wt/Math.pow(ht/100,2)*10)/10:null;
+  const rec={},gd={};
+  ITEMS.forEach(it=>{rec[it.k]=num("i_"+it.k);gd[it.k]=grade(sex,it.k,gr,rec[it.k]);});
+  const got=Object.values(gd).filter(x=>x!==null);
+  const avg=got.length?Math.round(got.reduce((a,b)=>a+b,0)/got.length*10)/10:null;
+  return{name:$("nm").value.trim()||"이름 없음",mdate:$("mdate").value||"",sex,gr,ht,wt,bmi,
+    fat:bmi?fatness(sex,gr,bmi):null,rec,gd,avg,
+    verdict:avg===null?null:avg<=1.5?"매우 우수":avg<=2.5?"우수":avg<=3.5?"보통":avg<=4.5?"노력 필요":"많이 부족"};
+}
+
+function render(){
+  const d=read(),box=$("result");
+  if(d.avg===null&&d.bmi===null){box.innerHTML="";$("shareRow").style.display="none";return;}
+  $("shareRow").style.display="flex";
+  let h='<div class="verdict">';
+  h+=d.avg!==null?`<b>${d.verdict}</b><span class="who">평균 ${d.avg}등급</span>`:'<b style="font-size:20px">기록을 더 넣어주세요</b>';
+  h+=`<span class="who">${d.name} · ${d.sex} · ${d.gr}`;
+  if(d.bmi)h+=` · BMI ${d.bmi} (${d.fat})`;
+  h+='</span></div><div class="belts">';
+  ITEMS.forEach(it=>{
+    const g=d.gd[it.k],t=th(d.sex,it.k,d.gr),v=d.rec[it.k];
+    const na=!t;
+    h+=`<div class="belt${na?" na":""}" style="--g:${g?GCOL[g]:"var(--mute)"}">`;
+    h+=`<div class="nm">${it.n}</div>`;
+    h+=`<div class="rec">${na?"이 학년은 측정 안 함":(v===null?"미입력":v+it.u+" · 3등급 기준 "+t[2]+it.u)}</div>`;
+    h+='<div class="bar">';
+    for(let i=5;i>=1;i--)h+=`<span class="seg${g&&i>=g?" on":""}"></span>`;
+    h+='</div>';
+    if(g)h+=`<div class="tag">${g}등급 · ${GNAME[g]} · ${GBELT[g]}</div>`;
+    h+='</div>';
+  });
+  h+='</div><div class="seg-legend">';
+  for(let i=1;i<=5;i++)h+=`<span><i style="background:${GCOL[i]}"></i>${i}등급 ${GNAME[i]}</span>`;
+  h+='</div>';
+  box.innerHTML=h;
+}
+
+const LKEY="paps_list_v1";
+function loadList(){try{return JSON.parse(localStorage.getItem(LKEY))||[];}catch(e){return [];}}
+function saveList(){try{localStorage.setItem(LKEY,JSON.stringify(list));}catch(e){alert("저장 공간이 가득 찼거나 브라우저가 저장을 막고 있습니다. CSV로 내려받아 보관해 주세요.");}}
+let list=loadList();
+function renderList(){
+  const b=$("listBody");
+  $("cnt").textContent=list.length?list.length+"명 · 이 브라우저에 저장됨":"";
+  if(!list.length){b.innerHTML='<tr><td colspan="16" class="empty">아직 저장한 학생이 없습니다. 기록을 넣고 “명단에 저장”을 누르세요.</td></tr>';return;}
+  b.innerHTML=list.map((d,i)=>{
+    const cells=ITEMS.map(it=>{
+      const g=d.gd[it.k];
+      return `<td>${g?`<span class="gnum" style="background:${GCOL[g]}${g===5?";color:#5C5A52":""}">${g}</span>`:"—"}</td>`;
+    }).join("");
+    return `<tr><td>${i+1}</td><td>${esc(d.name)}</td><td>${d.mdate||"—"}</td><td>${d.sex}</td><td>${d.gr}</td>
+      <td>${d.bmi??"—"}</td><td>${d.fat??"—"}</td>${cells}
+      <td><b>${d.avg??"—"}</b></td><td>${d.verdict??"—"}</td>
+      <td class="noprint"><button class="del" data-i="${i}">삭제</button></td></tr>`;
+  }).join("");
+}
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+$("listBody").addEventListener("click",e=>{
+  const b=e.target.closest(".del");if(!b)return;
+  list.splice(+b.dataset.i,1);saveList();renderList();
+});
+$("btnAdd").onclick=()=>{
+  const d=read();
+  if(d.avg===null&&d.bmi===null){alert("기록을 하나 이상 입력해 주세요.");return;}
+  list.push(d);saveList();renderList();
+
+  // 성장 그래프에도 자동으로 이번 기록을 반영
+  const md=d.mdate?new Date(d.mdate+"T00:00:00"):new Date();
+  const year=md.getFullYear(),month=md.getMonth()+1;
+  upsertProgress(d.name,year,month,d);
+  $("trackName").value=d.name;$("trackYear").value=year;$("trackMonth").value=month;
+  refreshNameList();renderChips();drawChart();
+
+  clearInputs();$("nm").focus();
+};
+function clearInputs(){["nm","ht","wt",...ITEMS.map(i=>"i_"+i.k)].forEach(id=>$(id).value="");render();}
+$("btnClear").onclick=clearInputs;
+$("btnPrint").onclick=()=>window.print();
+$("btnListClear").onclick=()=>{
+  if(!list.length){alert("저장된 학생이 없습니다.");return;}
+  if(!confirm(`저장된 학생 ${list.length}명을 전체 삭제할까요? 되돌릴 수 없습니다.`))return;
+  list=[];saveList();renderList();
+};
+$("btnCsv").onclick=()=>{
+  if(!list.length){alert("저장된 학생이 없습니다.");return;}
+  const head=["이름","측정일","성별","학년","키(cm)","몸무게(kg)","BMI","비만도",
+    ...ITEMS.flatMap(i=>[i.n+"("+i.u+")",i.short+" 등급"]),"평균등급","종합판정"];
+  const rows=list.map(d=>[d.name,d.mdate||"",d.sex,d.gr,d.ht??"",d.wt??"",d.bmi??"",d.fat??"",
+    ...ITEMS.flatMap(i=>[d.rec[i.k]??"",d.gd[i.k]??""]),d.avg??"",d.verdict??""]);
+  const csv=[head,...rows].map(r=>r.map(x=>`"${String(x).replace(/"/g,'""')}"`).join(",")).join("\r\n");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}));
+  a.download="체력측정_결과.csv";a.click();URL.revokeObjectURL(a.href);
+};
+["nm","sx","gr","ht","wt",...ITEMS.map(i=>"i_"+i.k)].forEach(id=>{
+  $(id).addEventListener("input",render);$(id).addEventListener("change",render);
+});
+
+/* ================= 결과 이미지 공유 ================= */
+const SITE_URL=""; // 배포 후 실제 주소를 넣어주세요 (예: "awoolimtkd.github.io/paps") — 비워두면 주소 줄이 빠집니다
+const BELT_HEX=["#14161A","#0B4E8C","#1E7A4B","#E0A800","#CFCABC"];
+const BELT_NAME=["","검은띠","파란띠","초록띠","노란띠","흰띠"];
+
+async function drawShareCard(d){
+  const canvas=$("shareCanvas"),ctx=canvas.getContext("2d");
+  const W=1080,H=1120;
+  if(document.fonts&&document.fonts.ready){try{await document.fonts.ready;}catch(e){}}
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle="#FAFAF7";ctx.fillRect(0,0,W,H);
+
+  // 헤더
+  ctx.fillStyle="#14161A";ctx.fillRect(0,0,W,190);
+  ctx.fillStyle="#C8102E";ctx.font="700 26px Pretendard, sans-serif";
+  ctx.fillText("체력측정 결과",60,66);
+  ctx.fillStyle="#FAFAF7";ctx.font="800 50px Pretendard, sans-serif";
+  ctx.fillText("PAPS 등급 계산기",60,138);
+
+  // 이름/성별/나이
+  ctx.fillStyle="#7C8189";ctx.font="600 30px Pretendard, sans-serif";
+  ctx.fillText(`${d.name} · ${d.sex} · ${d.gr}`,60,252);
+
+  // 종합 판정
+  ctx.fillStyle="#14161A";ctx.font="800 84px Pretendard, sans-serif";
+  ctx.fillText(d.verdict||"",60,350);
+  let y=460;
+  if(d.avg!==null){
+    ctx.fillStyle="#C8102E";ctx.font="700 34px Pretendard, sans-serif";
+    ctx.fillText(`평균 ${d.avg}등급`,60,404);
+  }
+  if(d.bmi){
+    ctx.fillStyle="#404040";ctx.font="500 28px Pretendard, sans-serif";
+    ctx.fillText(`BMI ${d.bmi} (${d.fat})`,60,y);
+    y+=46;
+  }
+  y+=26;
+
+  // 종목별 띠 바
+  ITEMS.forEach(it=>{
+    const g=d.gd[it.k];
+    ctx.fillStyle="#14161A";ctx.font="700 32px Pretendard, sans-serif";
+    ctx.textAlign="left";ctx.fillText(it.n,60,y);
+    ctx.fillStyle="#7C8189";ctx.font="500 24px Pretendard, sans-serif";
+    ctx.textAlign="right";
+    ctx.fillText(g?`${g}등급 · ${BELT_NAME[g]}`:"미입력",W-60,y);
+    ctx.textAlign="left";
+    y+=18;
+    const segGap=10,segW=(W-120-segGap*4)/5;
+    for(let i=0;i<5;i++){
+      const gi=i+1;
+      ctx.fillStyle=(g&&gi>=g)?BELT_HEX[gi-1]:"#EEECE4";
+      ctx.fillRect(60+i*(segW+segGap),y,segW,22);
+    }
+    y+=62;
+  });
+
+  // 하단 안내 배너
+  ctx.fillStyle="#F1EFE7";ctx.fillRect(0,H-140,W,140);
+  ctx.fillStyle="#14161A";ctx.font="700 30px Pretendard, sans-serif";
+  ctx.textAlign="center";
+  ctx.fillText("내 체력측정 등급, 여기서 바로 계산해보세요",W/2,H-85);
+  if(SITE_URL){
+    ctx.fillStyle="#0B4E8C";ctx.font="600 26px Pretendard, sans-serif";
+    ctx.fillText(SITE_URL,W/2,H-40);
+  }
+  ctx.textAlign="left";
+}
+
+$("btnShare").onclick=async()=>{
+  const d=read();
+  if(d.avg===null&&d.bmi===null){alert("기록을 하나 이상 입력해 주세요.");return;}
+  const btn=$("btnShare"),orig=btn.textContent;
+  btn.textContent="이미지 만드는 중…";btn.disabled=true;
+  try{
+    await drawShareCard(d);
+    $("shareCanvas").toBlob(async(blob)=>{
+      btn.textContent=orig;btn.disabled=false;
+      const fname=(d.name||"체력측정결과").replace(/[^\w가-힣-]/g,"")+".png";
+      const file=new File([blob],fname,{type:"image/png"});
+      if(navigator.canShare&&navigator.canShare({files:[file]})){
+        try{ await navigator.share({files:[file],title:"체력측정 결과",text:`${d.name} · ${d.verdict}`}); return; }
+        catch(e){ /* 공유 취소 또는 실패 — 아래 다운로드로 대체 */ }
+      }
+      const a=document.createElement("a");
+      a.href=URL.createObjectURL(blob);a.download=fname;a.click();
+      URL.revokeObjectURL(a.href);
+    },"image/png",0.95);
+  }catch(e){
+    btn.textContent=orig;btn.disabled=false;
+    alert("이미지를 만들지 못했습니다. 다시 시도해 주세요.");
+  }
+};
+
+/* 기준표 */
+function refTables(){
+  let h="";
+  [["남","남학생"],["여","여학생"]].forEach(([sx,label])=>{
+    h+=`<details><summary>${label} 기준표 · 7세~고3</summary><div>`;
+    ITEMS.forEach(it=>{
+      h+=`<div class="tblwrap"><table class="ref"><thead><tr><th colspan="6" style="text-align:left;background:var(--ink);color:var(--dobok);font-size:12px">${it.n} (${it.u}) · ${it.hint}</th></tr>
+      <tr><th>학년</th><th>1등급</th><th>2등급</th><th>3등급</th><th>4등급</th><th>5등급</th></tr></thead><tbody>`;
+      GR.forEach(g=>{
+        const t=th(sx,it.k,g);
+        const tag=YOUNG.includes(g)?`${g}<br><span style="font-size:9px;color:var(--hong);font-weight:400">추정</span>`:g;
+        h+=`<tr><td>${tag}</td>`;
+        h+=t?t.map(v=>`<td>${v} 이상</td>`).join("")+`<td>${t[3]} 미만</td>`
+            :`<td colspan="5" style="color:var(--mute)">이 나이는 측정하지 않습니다</td>`;
+        h+="</tr>";
+      });
+      h+="</tbody></table></div>";
+    });
+    h+=`<div class="tblwrap"><table class="ref"><thead><tr><th colspan="6" style="text-align:left;background:var(--ink);color:var(--dobok);font-size:12px">비만도 · BMI = 몸무게(kg) ÷ [키(m) × 키(m)]</th></tr>
+    <tr><th>학년</th><th>마름</th><th>정상</th><th>과체중</th><th>경도비만</th><th>고도비만</th></tr></thead><tbody>`;
+    GR.forEach(g=>{
+      const b=(sx==="남"?M:F).bmi[g],r1=Math.round((b[0]+0.1)*10)/10,r2=Math.round((b[1]+0.1)*10)/10;
+      const tag=YOUNG.includes(g)?`${g}<br><span style="font-size:9px;color:var(--hong);font-weight:400">추정</span>`:g;
+      h+=`<tr><td>${tag}</td><td>${b[0]} 이하</td><td>${r1}~${b[1]}</td>
+      <td>${b[2]===b[1]?"해당 없음":r2+"~"+b[2]}</td><td>${Math.round((b[2]+0.1)*10)/10}~29.9</td><td>30.0 이상</td></tr>`;
+    });
+    h+="</tbody></table></div></div></details>";
+  });
+  $("refs").innerHTML=h;
+}
+refTables();renderList();render();
+
+/* ================= 측정 방법 안내 ================= */
+const HOWTO={
+ shuttle:{tip:"신호음에 맞춰 20m(초등은 15m) 구간을 왕복으로 계속 뛰는 심폐지구력 검사입니다.",
+  steps:["20m(초등 15m) 간격으로 라바콘이나 선 두 개를 놓아 구간을 만듭니다.",
+   "신호음이 울리기 전에 반대쪽 선을 완전히 넘어야 합니다.",
+   "이동 중에 신호가 울리면 그 자리에서 바로 방향을 바꿔 되돌아갑니다.",
+   "신호가 울리기 전에 선을 못 넘은 횟수가 두 번째가 되면 측정을 마치고, 그 직전 횟수를 기록합니다."],
+  tip2:"신호음은 위 “측정 신호음 음원”에서 바로 재생할 수 있습니다."},
+ situp:{tip:"정식 명칭은 윗몸말아올리기입니다. 일반 윗몸일으키기보다 신호에 맞춰 천천히 하는 방식이라 횟수가 더 나옵니다.",
+  steps:["매트에 누워 무릎을 90도로 세우고, 발과 무릎 사이는 주먹 하나 정도 벌립니다.",
+   "팔은 곧게 펴서 허벅지 위에 올려둡니다.",
+   "3초에 한 번 울리는 신호음에 맞춰 손바닥이 무릎을 감쌀 때까지 상체를 말아 올렸다가, 다시 준비 자세로 돌아옵니다.",
+   "신호 박자를 놓치면 첫 번째는 그냥 넘어가고, 두 번째 놓치면 그때까지의 횟수로 종료합니다."],
+  tip2:"박자를 못 맞추는 아이가 많으니, 처음엔 신호음 없이 천천히 동작만 먼저 연습시켜 주세요."},
+ pushup:{tip:"팔 힘과 몸통 버티는 힘을 함께 봅니다. 여학생은 무릎을 대고 실시합니다.",
+  steps:["남학생: 양손을 어깨너비로 벌려 짚고, 머리부터 발끝까지 일직선을 유지합니다.",
+   "여학생: 무릎을 꿇고 상체는 반듯하게, 발등은 세워서 바닥에 닿지 않게 합니다.",
+   "팔을 굽혀 내려갈 때 팔꿈치가 90도가 되고, 가슴이 바닥(또는 봉)에 가깝게 닿을 만큼 내려갑니다.",
+   "더는 자세를 유지하며 반복하지 못할 때까지 횟수를 셉니다."],
+  tip2:"허리가 처지거나 엉덩이가 들리면 무효로 치는 경우가 많으니, 몸통이 일직선인지 옆에서 봐주세요."},
+ jump:{tip:"두 다리 순발력을 보는 검사로, 아이들이 비교적 쉽게 좋은 점수를 받는 종목입니다.",
+  steps:["출발선을 밟지 않고 그 뒤에 섭니다.",
+   "발을 한 번만 굴러 두 발이 동시에 앞으로 도약합니다.",
+   "착지할 때 뒤로 손을 짚거나 넘어지면 그 지점(가장 가까운 흔적)까지만 기록합니다.",
+   "두 번 실시해서 더 멀리 나온 기록을 남깁니다."],
+  tip2:"바닥이 미끄럽지 않은 곳에서, 착지 지점에 매트를 깔아주면 안전합니다."},
+ flex:{tip:"허리와 뒤허벅지 유연성을 보는 검사입니다.",
+  steps:["신발을 벗고 두 다리를 곧게 뻗어 앉되, 두 발 사이가 5cm를 넘지 않게 합니다.",
+   "양손을 겹쳐서 천천히 상체를 앞으로 굽히며 최대한 멀리 뻗습니다.",
+   "무릎이 뜨지 않게 편 상태를 2초 이상 유지한 뒤 손끝이 닿은 지점을 잽니다.",
+   "두 번 실시해서 더 좋은 기록을 남깁니다."],
+  tip2:"반동을 주며 튕기듯 뻗으면 다칠 수 있어요. 천천히, 숨을 내쉬면서 굽히게 해주세요."},
+ balance:{tip:"균형 감각을 보는 검사로, PAPS 공식 종목은 아니지만 태권도 수련에 도움이 되어 넣었습니다.",
+  steps:["편평한 바닥에서 한쪽 발로 섭니다.",
+   "반대쪽 발은 무릎을 굽혀 살짝 들어 올립니다.",
+   "신호와 함께 눈을 감고, 발이 땅에 닿거나 몸이 크게 흔들릴 때까지 시간을 잽니다.",
+   "좌우 한 번씩 재고 더 오래 버틴 기록을 남깁니다."],
+  tip2:"넘어질 수 있으니 주변에 부딪힐 물건이 없는 곳에서 실시하세요."}
+};
+function renderHowto(){
+  const h=ITEMS.map((it,i)=>`
+    <details class="howto"${i===0?" open":""}>
+      <summary><span class="ic">${i+1}</span><b>${it.n}</b> — ${HOWTO[it.k].tip}</summary>
+      <div class="howto-body">
+        <ol>${HOWTO[it.k].steps.map(s=>`<li>${s}</li>`).join("")}</ol>
+        <div class="tip"><b>Tip</b> · ${HOWTO[it.k].tip2}</div>
+      </div>
+    </details>`).join("");
+  $("howtoBox").innerHTML=h;
+}
+renderHowto();
+
+/* ================= 탭 메뉴 ================= */
+const TABS=["calc","howto","audio","standards","guide"];
+function showTab(name){
+  if(!TABS.includes(name))name="calc";
+  TABS.forEach(t=>$("tab-"+t).classList.toggle("on",t===name));
+  document.querySelectorAll(".tabbtn").forEach(b=>b.classList.toggle("on",b.dataset.tab===name));
+  try{history.replaceState(null,"","#"+name);}catch(e){/* 샌드박스 미리보기 등 URL 변경이 막힌 환경 — 탭 전환엔 영향 없음 */}
+  window.scrollTo(0,0);
+}
+$("tabnav").addEventListener("click",e=>{
+  const b=e.target.closest(".tabbtn");if(!b)return;
+  showTab(b.dataset.tab);
+});
+try{ if(location.hash && TABS.includes(location.hash.slice(1))) showTab(location.hash.slice(1)); }catch(e){}
+
+
+/* ================= 성장 그래프 ================= */
+const MONTHS=[1,2,3,4,5,6,7,8,9,10,11,12];
+for(let m=1;m<=12;m++)$("trackMonth").insertAdjacentHTML("beforeend",`<option value="${m}">${m}월</option>`);
+const nowM=new Date().getMonth()+1; $("trackMonth").value=nowM;
+
+const PKEY="paps_progress_v1";
+function loadProgress(){try{return JSON.parse(localStorage.getItem(PKEY))||{};}catch(e){return{};}}
+function saveProgress(p){try{localStorage.setItem(PKEY,JSON.stringify(p));}catch(e){alert("저장 공간이 가득 찼거나 브라우저가 저장을 막고 있습니다.");}}
+function upsertProgress(name,year,month,d){
+  const p=loadProgress();
+  p[name]=p[name]||[];
+  p[name]=p[name].filter(r=>!(r.year===year&&r.month===month));
+  p[name].push({year,month,sx:d.sex,gr:d.gr,ht:d.ht,wt:d.wt,bmi:d.bmi,fat:d.fat,rec:d.rec,gd:d.gd,avg:d.avg});
+  saveProgress(p);
+}
+function refreshNameList(){
+  const names=Object.keys(loadProgress());
+  $("trackNames").innerHTML=names.map(n=>`<option value="${esc(n)}">`).join("");
+}
+refreshNameList();
+
+const ITEM_ON={shuttle:true,situp:true,pushup:true,jump:true,flex:true,balance:true,avg:true};
+const TRACK_COLVAR={avg:null,shuttle:"--b1",situp:"--b2",pushup:"--b3",jump:"--b4",flex:"--nam",balance:"--hong"};
+function trackColor(k){
+  return k==="avg"?"#14161A":getComputedStyle(document.documentElement).getPropertyValue(TRACK_COLVAR[k]).trim();
+}
+function renderChips(){
+  const defs=[{k:"avg",n:"평균"},...ITEMS.map(it=>({k:it.k,n:it.short}))];
+  $("trackChips").innerHTML=defs.map(d=>{
+    const col=trackColor(d.k);
+    return `<span class="chip${ITEM_ON[d.k]?" on":""}" data-k="${d.k}" style="${ITEM_ON[d.k]?`background:${col};border-color:${col}`:""}">${d.n}</span>`;
+  }).join("");
+}
+$("trackChips").addEventListener("click",e=>{
+  const c=e.target.closest(".chip");if(!c)return;
+  const k=c.dataset.k;ITEM_ON[k]=!ITEM_ON[k];renderChips();drawChart();
+});
+
+function currentRows(){
+  const name=$("trackName").value.trim(),year=+$("trackYear").value;
+  if(!name)return null;
+  const rec=(loadProgress()[name]||[]).filter(r=>r.year===year).sort((a,b)=>a.month-b.month);
+  return{name,year,rec};
+}
+
+function drawChart(){
+  const box=$("chartWrap"),meta=$("trackMeta");
+  const cur=currentRows();
+  if(!cur||!cur.rec.length){
+    box.innerHTML='<div class="chart-empty">'+(cur?`${cur.year}년에 저장된 기록이 없습니다.`:"학생 이름을 입력하면 그래프가 나타납니다.")+'</div>';
+    meta.textContent="";return;
+  }
+  const W=760,H=260,ML=34,MR=14,MT=14,MB=28;
+  const x=m=>ML+((m-1)/11)*(W-ML-MR);
+  const y=g=>MT+((g-1)/4)*(H-MT-MB); // 1등급 위, 5등급 아래
+
+  let svg=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  // 격자 + y축(등급)
+  for(let g=1;g<=5;g++){
+    svg+=`<line x1="${ML}" y1="${y(g)}" x2="${W-MR}" y2="${y(g)}" stroke="#EEECE4" stroke-width="1"/>`;
+    svg+=`<text x="${ML-8}" y="${y(g)+3}" text-anchor="end" font-size="10" fill="#7C8189" font-family="Pretendard,sans-serif">${g}</text>`;
+  }
+  // x축(월)
+  MONTHS.forEach(m=>{
+    svg+=`<text x="${x(m)}" y="${H-8}" text-anchor="middle" font-size="10" fill="#7C8189" font-family="Pretendard,sans-serif">${m}월</text>`;
+  });
+
+  function seriesFor(key){
+    return cur.rec.map(r=>({m:r.month,v:key==="avg"?r.avg:(r.gd?r.gd[key]:null)})).filter(p=>p.v!==null&&p.v!==undefined);
+  }
+  const defs=[{k:"avg",w:3},...ITEMS.map(it=>({k:it.k,w:2}))];
+  defs.forEach(d=>{
+    if(!ITEM_ON[d.k])return;
+    const pts=seriesFor(d.k),col=trackColor(d.k);
+    if(!pts.length)return;
+    const path=pts.map((p,i)=>`${i===0?"M":"L"}${x(p.m).toFixed(1)},${y(p.v).toFixed(1)}`).join(" ");
+    svg+=`<path d="${path}" fill="none" stroke="${col}" stroke-width="${d.w}" stroke-linecap="round" stroke-linejoin="round" opacity="${d.k==='avg'?1:0.85}"/>`;
+    pts.forEach(p=>{
+      svg+=`<circle cx="${x(p.m).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="${d.k==='avg'?4:3}" fill="${col}"><title>${p.m}월 · ${p.v}등급</title></circle>`;
+    });
+  });
+  svg+="</svg>";
+  box.innerHTML=svg;
+
+  const first=cur.rec[0],last=cur.rec[cur.rec.length-1];
+  const diff=(last.avg!==null&&first.avg!==null)?Math.round((first.avg-last.avg)*10)/10:null;
+  meta.textContent=`${cur.name} · ${cur.year}년 · ${cur.rec.length}개월 기록`+
+    (diff===null?"":diff>0?` · 평균 ${diff}등급 향상`:diff<0?` · 평균 ${Math.abs(diff)}등급 하락`:" · 변화 없음");
+}
+
+$("btnTrackSave").onclick=()=>{
+  const name=$("trackName").value.trim();
+  if(!name){alert("학생 이름을 입력해 주세요.");return;}
+  const year=+$("trackYear").value,month=+$("trackMonth").value;
+  const d=read();
+  if(d.avg===null&&d.bmi===null){alert("위 “기록 입력”에 이번 달 측정값을 먼저 넣어주세요.");return;}
+  upsertProgress(name,year,month,d);
+  refreshNameList();renderChips();drawChart();
+};
+$("btnTrackDel").onclick=()=>{
+  const name=$("trackName").value.trim();
+  if(!name){alert("학생 이름을 입력해 주세요.");return;}
+  const p=loadProgress();
+  if(!p[name]){alert("저장된 기록이 없습니다.");return;}
+  if(!confirm(`${name} 학생의 저장된 기록을 모두 지울까요? 되돌릴 수 없습니다.`))return;
+  delete p[name];saveProgress(p);refreshNameList();drawChart();
+};
+$("trackName").addEventListener("input",drawChart);
+$("trackYear").addEventListener("input",drawChart);
+renderChips();drawChart();
+
+</script>
+</body>
+</html>
