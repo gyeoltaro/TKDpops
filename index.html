@@ -274,8 +274,8 @@ details[open] summary::after{content:"－"}
 
 <p class="note">
 <b>출처</b> · 초4~고3은 학교건강검사규칙 [별표] 신체능력검사(필수평가) 기준표(PAPS). 7세·초1~초3은 국가 공식 기준이 없어 위 추세를 이용해 만든 도장 자체 추정치입니다(빨간 “추정” 표시).<br>
-<b>팔굽혀펴기</b>는 공식 PAPS에서 중1부터 실시합니다. 초4~초6은 국가 기준대로 <b>—</b> 로 비워뒀고, 7세·초1~초3은 도장 자체 추정치로 채웠습니다(여학생은 무릎대고 실시).<br>
-<b>윗몸앞으로굽히기</b>는 공식 PAPS에서 초5부터 실시합니다. 초4는 국가 기준대로 <b>—</b> 로 비워뒀고, 7세·초1~초3은 도장 자체 추정치로 채웠습니다. <b>윗몸일으키기</b>는 PAPS 기준상 윗몸말아올리기(3초에 1회 신호음, 손바닥으로 무릎 감싸기)라 일반 싯업보다 횟수가 많이 나옵니다.<br>
+<b>팔굽혀펴기</b>는 공식 PAPS에서 중1부터 실시합니다. 그보다 어린 7세~초6은 국가 기준이 없어 도장 자체 추정치로 채웠습니다(빨간 “추정”·“*” 표시, 여학생은 무릎대고 실시).<br>
+<b>윗몸앞으로굽히기</b>는 공식 PAPS에서 초5부터 실시합니다. 그보다 어린 7세~초4는 국가 기준이 없어 도장 자체 추정치로 채웠습니다(빨간 “추정”·“*” 표시). <b>윗몸일으키기</b>는 PAPS 기준상 윗몸말아올리기(3초에 1회 신호음, 손바닥으로 무릎 감싸기)라 일반 싯업보다 횟수가 많이 나옵니다.<br>
 <b>눈감고외발서기</b>는 PAPS 종목이 아닙니다. 도장 자체 참고 기준을 넣어뒀으니, 아이들 기록을 보시고 조정해서 쓰세요.
 </p>
 </section>
@@ -319,19 +319,20 @@ details[open] summary::after{content:"－"}
 <script>
 const GR=["7세","초1","초2","초3","초4","초5","초6","중1","중2","중3","고1","고2","고3"];
 const YOUNG=["7세","초1","초2","초3"]; // 국가 공식 기준 없음 — 추정치
+const ESTIMATED_EXTRA={pushup:["초4","초5","초6"],flex:["초4"]}; // 이 행의 다른 항목은 공식이지만, 이 항목만 도장 자체 추정치
 const M={
  shuttle:{"7세":[87,59,35,19],초1:[88,60,36,20],초2:[90,62,38,22],초3:[93,65,41,24],초4:[96,69,45,26],초5:[100,73,50,29],초6:[104,78,54,32],중1:[64,50,36,20],중2:[66,52,38,22],중3:[68,54,40,24],고1:[70,56,42,26],고2:[72,58,44,28],고3:[74,60,46,30]},
  situp:{"7세":[80,40,22,4],초1:[80,40,22,4],초2:[80,40,22,5],초3:[80,40,22,6],초4:[80,40,22,7],초5:[80,40,22,10],초6:[80,40,22,10],중1:[90,55,33,14],중2:[90,55,33,14],중3:[90,55,33,14],고1:[90,60,35,15],고2:[90,60,35,17],고3:[90,60,35,17]},
- pushup:{"7세":[8,5,3,1],초1:[10,6,4,1],초2:[12,8,5,2],초3:[14,10,6,3],초4:null,초5:null,초6:null,중1:[34,25,12,4],중2:[34,25,12,4],중3:[34,25,14,4],고1:[46,30,16,7],고2:[50,42,25,11],고3:[56,46,30,17]},
+ pushup:{"7세":[8,5,3,1],초1:[10,6,4,1],초2:[12,8,5,2],초3:[14,10,6,3],초4:[18,13,8,3],초5:[22,16,9,3],초6:[27,20,10,4],중1:[34,25,12,4],중2:[34,25,12,4],중3:[34,25,14,4],고1:[46,30,16,7],고2:[50,42,25,11],고3:[56,46,30,17]},
  jump:{"7세":[135.6,128.4,109.4,74.8],초1:[140.8,131.6,112.6,78.6],초2:[148.3,136.1,117.1,84.1],초3:[158.1,141.9,122.9,91.3],초4:[170.1,149.1,130.1,100.1],초5:[180.1,159.1,141.1,111.1],초6:[200.1,167.1,148.1,122.1],중1:[211.1,177.1,159.1,131.1],중2:[218.1,187.1,169.1,136.1],중3:[238.1,201.1,180.1,145.1],고1:[255.1,216.1,195.1,160.1],고2:[258.1,228.1,212.1,177.1],고3:[264.1,243.1,221.1,185.1]},
- flex:{"7세":[1,-2,-6,-11],초1:[2,-1,-5,-10],초2:[3,0,-4,-9],초3:[4,1,-3,-8],초4:null,초5:[8,5,1,-4],초6:[8,5,1,-4],중1:[10,6,2,-4],중2:[10,7,2,-4],중3:[10,7,2.6,-3],고1:[13,9,4,-2],고2:[16,11,5,0.1],고3:[16,11,6,0.1]},
+ flex:{"7세":[1,-2,-6,-11],초1:[2,-1,-5,-10],초2:[3,0,-4,-9],초3:[4,1,-3,-8],초4:[6,3,-1,-6],초5:[8,5,1,-4],초6:[8,5,1,-4],중1:[10,6,2,-4],중2:[10,7,2,-4],중3:[10,7,2.6,-3],고1:[13,9,4,-2],고2:[16,11,5,0.1],고3:[16,11,6,0.1]},
  bmi:{"7세":[13.6,18.6,21.2],초1:[13.7,18.9,21.5],초2:[13.8,19.4,21.9],초3:[14.0,20.0,22.5],초4:[14.2,20.7,23.2],초5:[14.5,21.6,24.4],초6:[14.8,22.5,24.9],중1:[15.3,23.2,24.9],중2:[15.7,23.8,24.9],중3:[16.2,24.3,24.9],고1:[16.7,24.6,24.9],고2:[17.2,24.9,24.9],고3:[17.7,24.9,24.9]}};
 const F={
  shuttle:{"7세":[59,43,29,16],초1:[61,45,30,17],초2:[65,48,33,18],초3:[71,52,36,19],초4:[77,57,40,21],초5:[85,63,45,23],초6:[93,69,50,25],중1:[35,25,19,14],중2:[40,29,21,15],중3:[45,33,23,16],고1:[50,37,25,17],고2:[55,41,27,18],고3:[55,41,27,18]},
  situp:{"7세":[60,13,12,5],초1:[60,15,13,5],초2:[60,19,14,5],초3:[60,23,16,6],초4:[60,29,18,6],초5:[60,36,23,7],초6:[60,43,23,7],중1:[58,43,22,7],중2:[58,39,19,7],중3:[52,34,17,6],고1:[40,30,13,4],고2:[40,30,13,4],고3:[40,30,13,4]},
- pushup:{"7세":[6,4,2,1],초1:[8,5,3,1],초2:[10,6,4,2],초3:[12,8,5,3],초4:null,초5:null,초6:null,중1:[45,24,14,6],중2:[40,24,14,6],중3:[40,24,14,6],고1:[40,24,14,6],고2:[40,30,18,9],고3:[40,30,18,9]},
+ pushup:{"7세":[6,4,2,1],초1:[8,5,3,1],초2:[10,6,4,2],초3:[12,8,5,3],초4:[16,10,6,3],초5:[20,13,7,4],초6:[25,17,9,5],중1:[45,24,14,6],중2:[40,24,14,6],중3:[40,24,14,6],고1:[40,24,14,6],고2:[40,30,18,9],고3:[40,30,18,9]},
  jump:{"7세":[145.0,124.7,109.9,93.7],초1:[147.4,126.3,111.3,94.2],초2:[150.9,128.6,113.3,94.9],초3:[155.5,131.5,115.9,95.9],초4:[161.1,135.1,119.1,97.1],초5:[170.1,139.1,123.1,100.1],초6:[175.1,144.1,127.1,100.1],중1:[175.1,144.1,127.1,100.1],중2:[183.1,145.1,127.1,100.1],중3:[183.1,145.1,127.1,100.1],고1:[186.1,159.1,139.1,100.1],고2:[186.1,159.1,139.1,100.1],고3:[186.1,159.1,139.1,100.1]},
- flex:{"7세":[1,-2,-1,-6],초1:[2,-1,0,-5],초2:[4,1,1,-4],초3:[6,3,2,-2],초4:null,초5:[10,7,5,1],초6:[14,10,5,2],중1:[15,11,8,2],중2:[15,11,8,2],중3:[16,11,8,2],고1:[16,11,8,2],고2:[17,12,9,5],고3:[17,12,9,5]},
+ flex:{"7세":[1,-2,-1,-6],초1:[2,-1,0,-5],초2:[4,1,1,-4],초3:[6,3,2,-2],초4:[8,5,3,-1],초5:[10,7,5,1],초6:[14,10,5,2],중1:[15,11,8,2],중2:[15,11,8,2],중3:[16,11,8,2],고1:[16,11,8,2],고2:[17,12,9,5],고3:[17,12,9,5]},
  bmi:{"7세":[13.1,18.0,19.8],초1:[13.2,18.3,20.1],초2:[13.4,18.7,20.6],초3:[13.6,19.2,21.2],초4:[13.9,19.8,22.0],초5:[14.2,20.6,23.0],초6:[14.6,21.4,23.9],중1:[15.1,22.1,24.7],중2:[15.6,22.7,24.9],중3:[16.2,23.2,24.9],고1:[16.7,23.6,24.9],고2:[17.2,23.8,24.9],고3:[17.6,23.9,24.9]}};
 /* 도장 자체 참고 기준 — 필요하면 이 숫자만 고치세요 */
 const BAL={"7세":[19,11,5,2],초1:[20,12,6,3],초2:[23,14,8,4],초3:[26,17,10,5],초4:[30,20,12,6],초5:[35,24,15,8],초6:[40,28,18,9],중1:[45,30,20,10],중2:[45,30,20,10],중3:[45,30,20,10],고1:[50,35,22,12],고2:[50,35,22,12],고3:[50,35,22,12]};
@@ -381,6 +382,44 @@ function read(){
     verdict:avg===null?null:avg<=1.5?"매우 우수":avg<=2.5?"우수":avg<=3.5?"보통":avg<=4.5?"노력 필요":"많이 부족"};
 }
 
+/* ── 육각형 밸런스표 (SVG, 화면 표시용) ── */
+function hexPoint(cx,cy,r,i,n){
+  const a=-Math.PI/2+i*(2*Math.PI/n);
+  return [cx+r*Math.cos(a), cy+r*Math.sin(a)];
+}
+function buildHexSVG(d,size){
+  const S=size||320,cx=S/2,cy=S/2+6,R=S*0.34,N=6;
+  const labels=ITEMS.map(it=>it.short);
+  const grades=ITEMS.map(it=>d.gd[it.k]);
+  let svg=`<svg viewBox="0 0 ${S} ${S+34}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:${S}px;display:block;margin:0 auto">`;
+  for(let g=5; g>=1; g--){
+    const rg=R*(6-g)/5;
+    const pts=Array.from({length:N+1},(_,i)=>hexPoint(cx,cy,rg,i%N,N).join(",")).join(" ");
+    svg+=`<polyline points="${pts}" fill="none" stroke="#E4E1D6" stroke-width="1"/>`;
+  }
+  for(let i=0;i<N;i++){
+    const [x,y]=hexPoint(cx,cy,R,i,N);
+    svg+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#E4E1D6" stroke-width="1"/>`;
+  }
+  const dataPts=grades.map((g,i)=>{
+    const rg=g?R*(6-g)/5:0;
+    return hexPoint(cx,cy,rg,i,N);
+  });
+  const anyData=grades.some(g=>g);
+  if(anyData){
+    const poly=dataPts.map(p=>p.join(",")).join(" ");
+    svg+=`<polygon points="${poly}" fill="#0B4E8C" fill-opacity="0.25" stroke="#0B4E8C" stroke-width="2.5"/>`;
+    dataPts.forEach(([x,y],i)=>{ if(grades[i]) svg+=`<circle cx="${x}" cy="${y}" r="4" fill="#0B4E8C"/>`; });
+  }
+  for(let i=0;i<N;i++){
+    const [x,y]=hexPoint(cx,cy,R+30,i,N);
+    const anchor=x>cx+2?"start":x<cx-2?"end":"middle";
+    svg+=`<text x="${x}" y="${y}" text-anchor="${anchor}" dominant-baseline="middle" font-size="12" font-weight="600" fill="#14161A" font-family="Pretendard,sans-serif">${labels[i]}</text>`;
+  }
+  svg+="</svg>";
+  return svg;
+}
+
 function render(){
   const d=read(),box=$("result");
   if(d.avg===null&&d.bmi===null){box.innerHTML="";$("shareRow").style.display="none";return;}
@@ -389,7 +428,9 @@ function render(){
   h+=d.avg!==null?`<b>${d.verdict}</b><span class="who">평균 ${d.avg}등급</span>`:'<b style="font-size:20px">기록을 더 넣어주세요</b>';
   h+=`<span class="who">${d.name} · ${d.sex} · ${d.gr}`;
   if(d.bmi)h+=` · BMI ${d.bmi} (${d.fat})`;
-  h+='</span></div><div class="belts">';
+  h+='</span></div>';
+  h+='<div style="margin:8px 0 4px">'+buildHexSVG(d)+'</div>';
+  h+='<div class="belts">';
   ITEMS.forEach(it=>{
     const g=d.gd[it.k],t=th(d.sex,it.k,d.gr),v=d.rec[it.k];
     const na=!t;
@@ -475,69 +516,151 @@ const SITE_URL=""; // 배포 후 실제 주소를 넣어주세요 (예: "awoolim
 const BELT_HEX=["#14161A","#0B4E8C","#1E7A4B","#E0A800","#CFCABC"];
 const BELT_NAME=["","검은띠","파란띠","초록띠","노란띠","흰띠"];
 
-async function drawShareCard(d){
-  const canvas=$("shareCanvas"),ctx=canvas.getContext("2d");
-  const W=1080,H=1120;
-  if(document.fonts&&document.fonts.ready){try{await document.fonts.ready;}catch(e){}}
-
-  ctx.clearRect(0,0,W,H);
-  ctx.fillStyle="#FAFAF7";ctx.fillRect(0,0,W,H);
-
-  // 헤더
-  ctx.fillStyle="#14161A";ctx.fillRect(0,0,W,190);
-  ctx.fillStyle="#C8102E";ctx.font="700 26px Pretendard, sans-serif";
-  ctx.fillText("체력측정 결과",60,66);
-  ctx.fillStyle="#FAFAF7";ctx.font="800 50px Pretendard, sans-serif";
-  ctx.fillText("PAPS 등급 계산기",60,138);
-
-  // 이름/성별/나이
-  ctx.fillStyle="#7C8189";ctx.font="600 30px Pretendard, sans-serif";
-  ctx.fillText(`${d.name} · ${d.sex} · ${d.gr}`,60,252);
-
-  // 종합 판정
-  ctx.fillStyle="#14161A";ctx.font="800 84px Pretendard, sans-serif";
-  ctx.fillText(d.verdict||"",60,350);
-  let y=460;
-  if(d.avg!==null){
-    ctx.fillStyle="#C8102E";ctx.font="700 34px Pretendard, sans-serif";
-    ctx.fillText(`평균 ${d.avg}등급`,60,404);
+function drawHexRadarCanvas(ctx,cx,cy,R,grades,labels){
+  const N=6;
+  const pt=(r,i)=>{const a=-Math.PI/2+i*(2*Math.PI/N);return [cx+r*Math.cos(a),cy+r*Math.sin(a)];};
+  for(let g=5;g>=1;g--){
+    const rg=R*(6-g)/5;
+    ctx.beginPath();
+    for(let i=0;i<=N;i++){const [x,y]=pt(rg,i%N); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.strokeStyle="#E4E1D6";ctx.lineWidth=1.5;ctx.stroke();
   }
+  for(let i=0;i<N;i++){
+    const [x,y]=pt(R,i);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.strokeStyle="#E4E1D6";ctx.lineWidth=1.5;ctx.stroke();
+  }
+  const dataPts=grades.map((g,i)=>pt(g?R*(6-g)/5:0,i));
+  if(grades.some(g=>g)){
+    ctx.beginPath();
+    dataPts.forEach(([x,y],i)=>i===0?ctx.moveTo(x,y):ctx.lineTo(x,y));
+    ctx.closePath();
+    ctx.fillStyle="rgba(11,78,140,0.25)";ctx.fill();
+    ctx.strokeStyle="#0B4E8C";ctx.lineWidth=4;ctx.stroke();
+    dataPts.forEach(([x,y],i)=>{ if(grades[i]){ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fillStyle="#0B4E8C";ctx.fill();} });
+  }
+  ctx.font="700 26px Pretendard, sans-serif";ctx.fillStyle="#14161A";
+  for(let i=0;i<N;i++){
+    const [x,y]=pt(R+46,i);
+    ctx.textAlign=x>cx+2?"left":x<cx-2?"right":"center";
+    ctx.textBaseline=y>cy+2?"top":y<cy-2?"bottom":"middle";
+    ctx.fillText(labels[i],x,y);
+  }
+  ctx.textAlign="left";ctx.textBaseline="alphabetic";
+}
+
+function layoutShareCard(ctx,d,growthRows,hasGrowth,W){
+  // ctx===null → 측정만 하고 그리지 않음(높이 계산용). 실제 그릴 때와 완전히 같은 흐름을 타야 함.
+  const draw=!!ctx;
+  if(draw){
+    ctx.fillStyle="#14161A";ctx.fillRect(0,0,W,190);
+    ctx.fillStyle="#C8102E";ctx.font="700 26px Pretendard, sans-serif";
+    ctx.fillText("체력측정 결과",60,66);
+    ctx.fillStyle="#FAFAF7";ctx.font="800 50px Pretendard, sans-serif";
+    ctx.fillText("PAPS 등급 계산기",60,138);
+    ctx.fillStyle="#7C8189";ctx.font="600 30px Pretendard, sans-serif";
+    ctx.fillText(`${d.name} · ${d.sex} · ${d.gr}`,60,190+62);
+    ctx.fillStyle="#14161A";ctx.font="800 84px Pretendard, sans-serif";
+    ctx.fillText(d.verdict||"",60,190+160);
+    if(d.avg!==null){
+      ctx.fillStyle="#C8102E";ctx.font="700 34px Pretendard, sans-serif";
+      ctx.fillText(`평균 ${d.avg}등급`,60,190+214);
+    }
+  }
+  let y=190+270;
   if(d.bmi){
-    ctx.fillStyle="#404040";ctx.font="500 28px Pretendard, sans-serif";
-    ctx.fillText(`BMI ${d.bmi} (${d.fat})`,60,y);
+    if(draw){ctx.fillStyle="#404040";ctx.font="500 28px Pretendard, sans-serif";ctx.fillText(`BMI ${d.bmi} (${d.fat})`,60,y);}
     y+=46;
   }
-  y+=26;
+  y+=20;
+
+  // 육각형 밸런스표
+  if(draw){ctx.fillStyle="#14161A";ctx.font="700 32px Pretendard, sans-serif";ctx.fillText("밸런스표",60,y);}
+  y+=34;
+  if(draw)drawHexRadarCanvas(ctx,W/2,y+180,180,ITEMS.map(it=>d.gd[it.k]),ITEMS.map(it=>it.short));
+  y+=420;
 
   // 종목별 띠 바
   ITEMS.forEach(it=>{
-    const g=d.gd[it.k];
-    ctx.fillStyle="#14161A";ctx.font="700 32px Pretendard, sans-serif";
-    ctx.textAlign="left";ctx.fillText(it.n,60,y);
-    ctx.fillStyle="#7C8189";ctx.font="500 24px Pretendard, sans-serif";
-    ctx.textAlign="right";
-    ctx.fillText(g?`${g}등급 · ${BELT_NAME[g]}`:"미입력",W-60,y);
-    ctx.textAlign="left";
+    if(draw){
+      const g=d.gd[it.k];
+      ctx.fillStyle="#14161A";ctx.font="700 32px Pretendard, sans-serif";
+      ctx.textAlign="left";ctx.fillText(it.n,60,y);
+      ctx.fillStyle="#7C8189";ctx.font="500 24px Pretendard, sans-serif";
+      ctx.textAlign="right";
+      ctx.fillText(g?`${g}등급 · ${BELT_NAME[g]}`:"미입력",W-60,y);
+      ctx.textAlign="left";
+    }
     y+=18;
-    const segGap=10,segW=(W-120-segGap*4)/5;
-    for(let i=0;i<5;i++){
-      const gi=i+1;
-      ctx.fillStyle=(g&&gi>=g)?BELT_HEX[gi-1]:"#EEECE4";
-      ctx.fillRect(60+i*(segW+segGap),y,segW,22);
+    if(draw){
+      const g=d.gd[it.k];
+      const segGap=10,segW=(W-120-segGap*4)/5;
+      for(let i=0;i<5;i++){
+        const gi=i+1;
+        ctx.fillStyle=(g&&gi>=g)?BELT_HEX[gi-1]:"#EEECE4";
+        ctx.fillRect(60+i*(segW+segGap),y,segW,22);
+      }
     }
     y+=62;
   });
 
-  // 하단 안내 배너
-  ctx.fillStyle="#F1EFE7";ctx.fillRect(0,H-140,W,140);
-  ctx.fillStyle="#14161A";ctx.font="700 30px Pretendard, sans-serif";
-  ctx.textAlign="center";
-  ctx.fillText("내 체력측정 등급, 여기서 바로 계산해보세요",W/2,H-85);
-  if(SITE_URL){
-    ctx.fillStyle="#0B4E8C";ctx.font="600 26px Pretendard, sans-serif";
-    ctx.fillText(SITE_URL,W/2,H-40);
+  // 성장 그래프 (2개월 이상 기록이 있을 때만)
+  if(hasGrowth){
+    y+=20;
+    if(draw){ctx.fillStyle="#14161A";ctx.font="700 32px Pretendard, sans-serif";ctx.fillText(`성장 그래프 · ${$("trackYear").value}년`,60,y);}
+    y+=40;
+    const gx0=60,gx1=W-60,gy0=y,gy1=y+200;
+    if(draw){
+      for(let g=1;g<=5;g++){
+        const gy=gy0+((g-1)/4)*(gy1-gy0);
+        ctx.strokeStyle="#EEECE4";ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(gx0,gy);ctx.lineTo(gx1,gy);ctx.stroke();
+        ctx.fillStyle="#7C8189";ctx.font="500 20px Pretendard, sans-serif";
+        ctx.textAlign="right";ctx.fillText(String(g),gx0-10,gy+6);ctx.textAlign="left";
+      }
+      const xFor=m=>gx0+((m-1)/11)*(gx1-gx0);
+      const yFor=v=>gy0+((v-1)/4)*(gy1-gy0);
+      ctx.beginPath();
+      growthRows.forEach((r,i)=>{const px=xFor(r.month),py=yFor(r.avg);i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);});
+      ctx.strokeStyle="#14161A";ctx.lineWidth=4;ctx.lineJoin="round";ctx.stroke();
+      growthRows.forEach(r=>{
+        const px=xFor(r.month),py=yFor(r.avg);
+        ctx.beginPath();ctx.arc(px,py,6,0,Math.PI*2);ctx.fillStyle="#14161A";ctx.fill();
+        ctx.fillStyle="#7C8189";ctx.font="500 18px Pretendard, sans-serif";ctx.textAlign="center";
+        ctx.fillText(`${r.month}월`,px,gy1+28);ctx.textAlign="left";
+      });
+    }
+    y=gy1+60;
   }
-  ctx.textAlign="left";
+
+  y+=30; // 본문 하단 여백
+  const FOOTER_H=140;
+  const H=y+FOOTER_H;
+  if(draw){
+    ctx.fillStyle="#F1EFE7";ctx.fillRect(0,H-FOOTER_H,W,FOOTER_H);
+    ctx.fillStyle="#14161A";ctx.font="700 30px Pretendard, sans-serif";
+    ctx.textAlign="center";
+    ctx.fillText("내 체력측정 등급, 여기서 바로 계산해보세요",W/2,H-85);
+    if(SITE_URL){
+      ctx.fillStyle="#0B4E8C";ctx.font="600 26px Pretendard, sans-serif";
+      ctx.fillText(SITE_URL,W/2,H-40);
+    }
+    ctx.textAlign="left";
+  }
+  return H;
+}
+
+async function drawShareCard(d){
+  const canvas=$("shareCanvas"),ctx=canvas.getContext("2d");
+  const W=1080;
+  if(document.fonts&&document.fonts.ready){try{await document.fonts.ready;}catch(e){}}
+
+  const growthRows=(loadProgress()[d.name]||[]).filter(r=>r.year===+$("trackYear").value).sort((a,b)=>a.month-b.month);
+  const hasGrowth=growthRows.length>=2;
+
+  const H=layoutShareCard(null,d,growthRows,hasGrowth,W); // 1차: 높이만 계산
+  canvas.width=W;canvas.height=H;
+  ctx.fillStyle="#FAFAF7";ctx.fillRect(0,0,W,H);
+  layoutShareCard(ctx,d,growthRows,hasGrowth,W); // 2차: 실제로 그리기
 }
 
 $("btnShare").onclick=async()=>{
@@ -549,8 +672,8 @@ $("btnShare").onclick=async()=>{
     await drawShareCard(d);
     $("shareCanvas").toBlob(async(blob)=>{
       btn.textContent=orig;btn.disabled=false;
-      const fname=(d.name||"체력측정결과").replace(/[^\w가-힣-]/g,"")+".png";
-      const file=new File([blob],fname,{type:"image/png"});
+      const fname=(d.name||"체력측정결과").replace(/[^\w가-힣-]/g,"")+".jpg";
+      const file=new File([blob],fname,{type:"image/jpeg"});
       if(navigator.canShare&&navigator.canShare({files:[file]})){
         try{ await navigator.share({files:[file],title:"체력측정 결과",text:`${d.name} · ${d.verdict}`}); return; }
         catch(e){ /* 공유 취소 또는 실패 — 아래 다운로드로 대체 */ }
@@ -558,7 +681,7 @@ $("btnShare").onclick=async()=>{
       const a=document.createElement("a");
       a.href=URL.createObjectURL(blob);a.download=fname;a.click();
       URL.revokeObjectURL(a.href);
-    },"image/png",0.95);
+    },"image/jpeg",0.92);
   }catch(e){
     btn.textContent=orig;btn.disabled=false;
     alert("이미지를 만들지 못했습니다. 다시 시도해 주세요.");
@@ -576,12 +699,18 @@ function refTables(){
       GR.forEach(g=>{
         const t=th(sx,it.k,g);
         const tag=YOUNG.includes(g)?`${g}<br><span style="font-size:9px;color:var(--hong);font-weight:400">추정</span>`:g;
+        const extraEst=(ESTIMATED_EXTRA[it.k]||[]).includes(g)&&!YOUNG.includes(g);
         h+=`<tr><td>${tag}</td>`;
-        h+=t?t.map(v=>`<td>${v} 이상</td>`).join("")+`<td>${t[3]} 미만</td>`
+        h+=t?t.map(v=>`<td>${v} 이상${extraEst?'<span style="color:var(--hong);font-size:9px"> *</span>':""}</td>`).join("")+`<td>${t[3]} 미만</td>`
             :`<td colspan="5" style="color:var(--mute)">이 나이는 측정하지 않습니다</td>`;
         h+="</tr>";
       });
-      h+="</tbody></table></div>";
+      h+="</tbody></table>";
+      if(ESTIMATED_EXTRA[it.k]){
+        const startNote=it.k==="pushup"?"팔굽혀펴기는 중1부터":"윗몸앞으로굽히기는 초5부터";
+        h+=`<p style="font-size:11px;color:var(--hong);margin:6px 2px 0">* ${ESTIMATED_EXTRA[it.k].join("·")}은 국가 기준이 없어(${startNote} 공식 실시) 도장 자체 추정치로 채웠습니다.</p>`;
+      }
+      h+="</div>";
     });
     h+=`<div class="tblwrap"><table class="ref"><thead><tr><th colspan="6" style="text-align:left;background:var(--ink);color:var(--dobok);font-size:12px">비만도 · BMI = 몸무게(kg) ÷ [키(m) × 키(m)]</th></tr>
     <tr><th>학년</th><th>마름</th><th>정상</th><th>과체중</th><th>경도비만</th><th>고도비만</th></tr></thead><tbody>`;
